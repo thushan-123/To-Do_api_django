@@ -2,8 +2,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from models import User
-from serializers import UserSerializer
+from .models import User
+from .serializers import UserSerializer
 
 @api_view(['POST'])
 def registerUser(request):
@@ -26,13 +26,33 @@ def getUsers(request, user_id):
 
 @api_view(['PUT'])
 def updateUser(request):
-    if request.method == 'PUT':
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message" : "user updated" , "data" : serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    return Response(status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        user = User.objects.get(id=request.data['id'])
+    except User.DoesNotExist:
+        return Response(
+            {"error": "User not found"},
+            status=status.HTTP_404_NOT_FOUND
+        )
+
+    serializer = UserSerializer(
+        user,
+        data=request.data
+    )
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(
+            {
+                "message": "User updated",
+                "data": serializer.data
+            },
+            status=status.HTTP_200_OK
+        )
+
+    return Response(
+        serializer.errors,
+        status=status.HTTP_400_BAD_REQUEST
+    )
 
 @api_view(['DELETE'])
 def deleteUser(request):
