@@ -30,7 +30,7 @@ def updateUser(request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response({"message" : "user updated" , "data" : serializer.data}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(status=status.HTTP_401_UNAUTHORIZED)
 
@@ -40,7 +40,7 @@ def deleteUser(request):
         if request.method == 'DELETE':
             user = User.objects.get(id=request.data['id'])
             user.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response({"message" : "user deleted"},status=status.HTTP_204_NO_CONTENT)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     return Response(status=status.HTTP_401_UNAUTHORIZED)
