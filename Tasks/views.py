@@ -26,4 +26,20 @@ def create_task(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(status=status.HTTP_401_UNAUTHORIZED)
 
+@api_view(['PUT'])
+def update_task(request, task_id):
+    if request.method == 'PUT':
+        serializer = TaskSerializer(instance=request.data, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+@api_view(['DELETE'])
+def delete_task(request, task_id):
+    if request.method == 'DELETE':
+        Task.objects.filter(id=task_id).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    return Response(status=status.HTTP_401_UNAUTHORIZED)
 
