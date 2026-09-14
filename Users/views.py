@@ -25,9 +25,9 @@ def getUsers(request):
     return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['PUT'])
-def updateUser(request):
+def updateUser(request, user_id):
     try:
-        user = User.objects.get(id=request.data['id'])
+        user = User.objects.get(user_id=user_id)
     except User.DoesNotExist:
         return Response(
             {"error": "User not found"},
@@ -55,12 +55,12 @@ def updateUser(request):
     )
 
 @api_view(['DELETE'])
-def deleteUser(request):
+def deleteUser(request, user_id):
     try:
         if request.method == 'DELETE':
-            user = User.objects.get(id=request.data['id'])
+            user = User.objects.get(user_id=user_id)
             user.delete()
-            return Response({"message" : "user deleted"},status=status.HTTP_204_NO_CONTENT)
+            return Response({"message" : "user deleted"},status=status.HTTP_200_OK)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     return Response(status=status.HTTP_401_UNAUTHORIZED)

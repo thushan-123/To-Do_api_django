@@ -9,9 +9,9 @@ urlpatterns = [
     path('users', views.getUsers, name='getUsers'),
 
     # update user
-    path('update', views.updateUser, name='updateUser'),
+    path('update/<int:user_id>', views.updateUser, name='updateUser'),
 
     # delete
-    path('delete', views.deleteUser, name='deleteUser'),
+    path('delete/<int:user_id>', views.deleteUser, name='deleteUser'),
 ]
 
