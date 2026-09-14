@@ -17,7 +17,7 @@ def registerUser(request):
     return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['GET'])
-def getUsers(request, user_id):
+def getUsers(request):
     if request.method == 'GET':
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
