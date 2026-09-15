@@ -18,9 +18,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-
+# from .views import not_found_404
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('Users.urls')),
     path('tasks/', include('Tasks.urls')),
 ]
+
+handler404 = 'todo_api.views.not_found_404'
