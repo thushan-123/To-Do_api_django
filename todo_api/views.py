@@ -1,6 +1,6 @@
 from  django.http import JsonResponse
 
-def not_found_404(request):
+def not_found_404(request, exception):
     return JsonResponse({
             'error': 'Not found',
             'message': 'Not found'
