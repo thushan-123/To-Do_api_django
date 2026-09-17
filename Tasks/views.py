@@ -19,9 +19,11 @@ def filter_tasks(request, user_id):
 @api_view(['POST'])
 def create_task(request):
     if request.method == 'POST':
+        # print("1st")
         serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            # print("2save")
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(status=status.HTTP_401_UNAUTHORIZED)
@@ -54,6 +56,9 @@ def update_task(request, task_id):
 def delete_task(request, task_id):
     if request.method == 'DELETE':
         Task.objects.filter(task_id=task_id).delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {"message": "Task deleted"},
+            status=status.HTTP_200_OK
+        )
     return Response(status=status.HTTP_401_UNAUTHORIZED)
 
