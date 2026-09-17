@@ -16,12 +16,24 @@ def registerUser(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def getUsers(request):
-    if request.method == 'GET':
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    if request.method == 'POST':
+        user = User.objects.get(user_id=request.data['user_id'])
+        if user:
+            if request.data['password'] == user.password:
+                serializer = UserSerializer(user, many=False)
+                return Response(
+                    {
+                        "message": "Login Successful",
+                        "data": serializer.data,
+                        "access_token" : "jsdfisidfnsidfbsidfn"
+                    },
+                    status=status.HTTP_200_OK
+                )
+
+        return Response({"message" : "login fail"}
+                        , status=status.HTTP_401_UNAUTHORIZED)
     return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['PUT'])
