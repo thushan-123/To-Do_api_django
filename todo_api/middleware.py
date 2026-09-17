@@ -11,3 +11,4 @@ class CustomMiddleware:
         print(f"Response: {res.status_code}")
 
         return res
+

@@ -6,7 +6,7 @@ from Users.models import User
 
 class Task(models.Model):
     task_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(
+    user_id = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='tasks'
