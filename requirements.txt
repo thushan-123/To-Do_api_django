@@ -1,9 +1,16 @@
 asgiref==3.12.1
 Django==6.1.1
+django-cors-headers==4.9.0
 django-stubs==6.1.0
 django-stubs-ext==6.1.0
 djangorestframework==3.18.1
 djangorestframework-stubs==3.18.1
+djangorestframework_simplejwt==5.5.1
+mysqlclient==2.2.8
+packaging==26.3
+PyJWT==2.14.0
+setuptools==84.0.0
 sqlparse==0.6.0
 types-PyYAML==6.0.12.20260906
 typing_extensions==4.16.0
+wheel==0.48.0
